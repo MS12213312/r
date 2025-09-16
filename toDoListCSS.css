@@ -1,0 +1,53 @@
+.inputContainer{
+    display: flex;
+    margin: 5px 0% 0px 0%;
+    padding: 1% 1% 0% 0;
+    }
+
+.inputContainer > div{
+    line-height: 1.3;
+    }
+
+table, tr, td, th {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+    }
+
+td, th {
+    padding: 4px;
+    }
+
+th {
+    background-color: darkblue;
+    border: 1px solid darkblue;
+    color: white;
+    }
+
+tr:nth-child(even) {
+    background: antiquewhite;
+    }
+
+.taskTableHeader, .personTableHeader{
+    min-width: 200px;
+}
+
+.dateTableHeader{
+    min-width: 120px;
+}
+
+.buttonsTableHeader{
+    min-width: 105px;
+}
+
+.dateTableData{
+    text-align: center;
+}
+
+.checkboxTableData{
+    text-align: center;
+}
+
+/* .tableCheckbox{
+    width: 40px;
+    margin: 0px auto;
+} */
