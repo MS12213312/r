@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactiontime</title>
+
+    <style>
+        html, body{
+            margin: 0;
+            height: 100%;
+        }
+
+        #layout{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            gap: 30px;
+        }
+        
+        .lamp{
+            display: grid;
+            grid-template-columns: repeat(5, auto);
+            grid-gap: 5px;
+            border-style: solid;
+            width: min-content;
+            padding: 2%;
+            background-color: lightslategray;
+        }
+
+        .bulb{
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border-style: solid;
+        }
+
+        #outputView{
+            margin: 0px;
+        }
+
+        .lightOff{
+            background-color: lightgrey;
+        }
+
+        .lightOn{
+            background-color: yellow;
+            cursor: pointer;
+        }
+
+        .timerInfoText{
+            font-size: 200%;
+        }
+
+
+    </style>
+    
+</head>
+<body>
+
+    <div id="outputView"></div>
+
+    <script>
+        
+        //Model
+        let numOfBulbs = 25;
+        let selectedBulbIndex;
+        let selectedBulb;
+        let indexArray = Array.from({ length: 25 }, (_, index) => "bulb" + `${index + 1}`);
+        
+        let startTime;
+        let finishTime;
+        let spentMilliseconds;
+        let spentSeconds;
+
+        let previous = "";
+        let count = 0;
+
+
+
+        //View
+        let outputViewDiv = document.getElementById("outputView");
+        controlFunction();
+
+        function updateView(){
+            
+            startTime = new Date().getTime();
+
+            let view = /*html*/`
+            <div id="layout">
+
+            <div id="lampContainer" class="lamp"></div>
+
+            <div class="timerInfoText">                    
+                </div id="previousTimes">Tider:<br>${previous}<div>
+            </div>
+
+            </div>
+            `;
+
+            outputViewDiv.innerHTML = view;
+
+            let lampContainerDiv = document.getElementById("lampContainer");
+
+            for(i = 0; i < numOfBulbs; i++){
+                lampContainerDiv.innerHTML += createCircle(i);
+            }
+        }
+
+        function createCircle(i){
+            if(i == selectedBulbIndex){
+                return /*html*/`
+                <div id=${indexArray[i]} class="bulb lightOn" onclick="timer(); controlFunction()"></div>
+                `;
+            }
+
+            return /*html*/`
+            <div id=${indexArray[i]} class="bulb lightOff"></div>
+            `;
+            
+        }
+
+
+
+        //Controller
+        function controlFunction(){
+            selectedBulbIndex = randomBulbNumber();
+            selectedBulb = document.getElementById(indexArray[selectedBulbIndex]);
+            updateView();
+        }
+
+        function timer(){
+            count += 1;
+            finishTime = new Date().getTime();
+            spentMilliseconds = Math.floor(finishTime - startTime);
+            spentSeconds = spentMilliseconds / 1000;
+            previous += `${count}. ${spentSeconds} sek<br>`
+        }
+
+        function randomBulbNumber(){
+            return Math.floor(Math.random()*numOfBulbs);
+        }
+
+    </script>
+</body>
+</html>
