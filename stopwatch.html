@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+
+    <style>
+        button {
+            cursor: pointer;
+            padding: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <button type="button" id="startButton" onclick="enableStopp(); nyttInterval=setInterval(startCount, 10);">Start</button>
+    <button type="button" id="stopButton" onclick="stopCount()" disabled>Stop</button>
+    <button type="button" onclick="reset()">Reset</button>
+
+    <p>Time: <span id="time">0</span> s</p>
+    <p>Last time: <span id=last></span></p>
+    <p>Earlier times:<br><span id="earlierTimes"></span></p>
+
+    <script>
+        var nyttInterval; sec = 0, i = 1, times = []
+        
+        function enableStopp(){
+            document.getElementById("stopButton").removeAttribute("disabled");
+        }
+        
+        function startCount(){
+            sec += 0.01
+            document.getElementById("time").innerHTML = sec.toFixed(2)
+            document.getElementById("startButton").disabled = true;
+        }
+
+        function stopCount(){
+            clearInterval(nyttInterval)
+            document.getElementById("last").innerHTML = sec.toFixed(2).toString() + " s"
+            document.getElementById("time").innerHTML = 0;
+            times.push(i.toString() + ". "  + sec.toFixed(2).toString() + " s");
+            i++;
+            document.getElementById("earlierTimes").innerHTML = times.join("<br>");
+            sec = 0
+            nyttInterval=setInterval(startCount, 10)
+        }
+
+            function reset(){
+
+            document.getElementById('startButton').removeAttribute("disabled");
+            clearInterval(nyttInterval)
+            document.getElementById("time").innerHTML = 0
+            document.getElementById("last").innerHTML = ""
+            document.getElementById("earlierTimes").innerHTML = ""
+            sec = 0, i = 1, times = []
+            document.getElementById("stopButton").setAttribute("disabled", "true");
+
+        }
+    </script>
+</body>
+</html>
